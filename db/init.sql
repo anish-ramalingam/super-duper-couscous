@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS test_data (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    value FLOAT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

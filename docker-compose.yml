@@ -1,0 +1,33 @@
+services:
+
+  ignition:
+    image: inductiveautomation/ignition:8.1
+    container_name: ignition-gateway
+    ports:
+      - "8088:8088"
+    environment:
+      - ACCEPT_IGNITION_EULA=Y
+      - GATEWAY_ADMIN_USERNAME=admin
+      - GATEWAY_ADMIN_PASSWORD=password
+    volumes:
+      - ./ignition/data:/usr/local/bin/ignition/data
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:   # ✅ MUST be inside services
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ignition-mssql
+    ports:
+      - "1434:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Pass123
+    volumes:
+      - mssql-data:/var/opt/mssql
+    restart: unless-stopped
+
+volumes:
+  mssql-data:
+
+
