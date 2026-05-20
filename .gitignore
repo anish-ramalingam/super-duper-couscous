@@ -1,6 +1,11 @@
 # Ignore ignition runtime data created by container
 /ignition/data/
 
+# Track project source under ignition runtime data so designer changes appear in git
+!/ignition/data/projects/
+!/ignition/data/projects/scada-practice/
+!/ignition/data/projects/scada-practice/**
+
 # Ignore common OS/editor files
 .DS_Store
 *.swp
