@@ -1,0 +1,7 @@
+# Ignore ignition runtime data created by container
+/ignition/data/
+
+# Ignore common OS/editor files
+.DS_Store
+*.swp
+*.swo
