@@ -9,6 +9,10 @@
 /ignition/data/projects/.resources/
 /ignition/data/projects/.resources/**
 
+# Ignore runtime binary/store files produced by Designer
+/ignition/data/projects/**/*.bin
+/ignition/data/projects/**/*.idb
+
 # Ignore common OS/editor files
 .DS_Store
 *.swp
