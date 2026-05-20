@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
 
   ignition:
@@ -11,11 +13,13 @@ services:
       - GATEWAY_ADMIN_PASSWORD=password
     volumes:
       - ./ignition/data:/usr/local/bin/ignition/data
+    # Wait for DB to be healthy before starting (Docker Compose 'condition' requires non-swarm compose)
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     restart: unless-stopped
 
-  db:   # ✅ MUST be inside services
+  db:   # SQL Server for Ignition
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: ignition-mssql
     ports:
@@ -26,6 +30,12 @@ services:
     volumes:
       - mssql-data:/var/opt/mssql
     restart: unless-stopped
+    healthcheck:
+      # Check TCP listener on 1433; adjust if `ss` is not available in image
+      test: ["CMD-SHELL", "bash -c \"ss -ltn | grep -q ':1433' || exit 1\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
 volumes:
   mssql-data:
